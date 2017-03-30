@@ -1,0 +1,73 @@
+<link rel="import" href="./bower_components/polymer/polymer.html">
+
+
+<dom-module id="mon-element">
+    <template>
+         <style>
+            :host {
+              display: block;
+              font-family: 'Roboto Slab';
+              padding: 16px;
+                
+            }
+            :host([background]) {
+              background: var(--background-color, #9E9E9E);
+
+            }
+             
+             
+          </style>
+      
+            <section id="conteneur" class="conteneur" on-click="_click">
+                <slot ></slot>
+                <input type="text" value="{{valeur::input}}">
+                <p>[[valeur]]</p>
+            </section>
+            
+            
+    </template>
+    <script>
+        class MonElement extends Polymer.Element {
+            static get is() {
+                return 'mon-element';
+            }
+            static get properties() {
+                return {
+                    prop1: {
+                        type: String
+                        , value: 'demo fancy-tabs-poly'
+                    },
+                    valeur : {
+                        type: String,
+                        
+                    },    
+                };
+            }
+            constructor(){
+                super();
+            }
+            connectedCallback() {
+                super.connectedCallback();
+                //this.addEventListener("click", this._click);
+            }
+            disconnectedCallback() {
+                super.disconnectedCallback();
+                //this.removeEventListener("click", this._click);
+            }
+            _click() {
+                console.log("clic");
+                console.log(this);
+            }
+            
+        }
+        window.customElements.define(MonElement.is, MonElement);
+    </script>
+</dom-module>
+
+
+
+
+
+
+
+

@@ -1,0 +1,108 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/src/demopoly-app/demopoly-app-style.html">
+<link rel="import" href="/bower_components/iron-image/iron-image.html">
+<link rel="import" href="/bower_components/paper-card/paper-card.html">
+<dom-module id="details-biere">
+    <template>
+        <style is="custom-style" include="shared-styles">
+            :host{
+                display: flex;
+                text-align: center;
+                width: 100%;
+            }
+            paper-card {
+                
+            }
+            
+            .biere-header {
+                @apply(--paper-font-headline);
+            }
+            
+            .biere-light {
+                color: var(--paper-grey-600);
+            }
+            
+            .biere-location {
+                float: right;
+                font-size: 15px;
+                vertical-align: middle;
+            }
+            
+            .biere-reserve {
+                color: var(--google-blue-500);
+            }
+            
+            iron-icon.star {
+                --iron-icon-width: 16px;
+                --iron-icon-height: 16px;
+                color: var(--paper-amber-500);
+            }
+            
+            iron-icon.star:last-of-type {
+                color: var(--paper-grey-500);
+            }
+            
+            .biere {
+                position: relative;
+                width: 400px;
+                height: 150px;
+                display: flex;
+                overflow: hidden;
+                background-color: #FFF;
+            }
+        </style>
+        
+            <iron-ajax id="requeteBiereDetails" url="http://127.0.0.1:8000/webservice/php/biere/[[id_biere]]" handle-as="json" on-response="cbReponse" last-response="{{ajaxBieres}}" debounce-duration="300"></iron-ajax>
+            
+            <paper-card image="http://lorempixel.com/500/281/?id=[[id_biere]]">
+                <div class="card-content">
+                    <div class="biere-header">[[ajaxBieres.nom]]
+                        
+                    </div>
+                    <div class="biere-rating">
+                        <iron-icon class="star" icon="star"></iron-icon>
+                        <iron-icon class="star" icon="star"></iron-icon>
+                        <iron-icon class="star" icon="star"></iron-icon>
+                        <iron-icon class="star" icon="star"></iron-icon>
+                        <iron-icon class="star" icon="star"></iron-icon>
+                    </div>
+                    <p>[[ajaxBieres.brasserie]]</p>
+                    <p class="biere-light">[[ajaxBieres.description]]</p>
+                </div>
+                <div class="card-actions">
+                    <!--<div class="horizontal justified">
+                        <paper-icon-button icon="icons:event"></paper-icon-button>
+                        <paper-button>5:30PM</paper-button>
+                        <paper-button>7:30PM</paper-button>
+                        <paper-button>9:00PM</paper-button>
+                        <paper-button class="biere-reserve">Reserve</paper-button>
+                    </div>-->
+                </div>
+            </paper-card>
+    </template>
+    <script>
+        class DetailsBiere extends Polymer.Element {
+            static get is() {
+                return 'details-biere';
+            }
+            static get properties() {
+                return {
+                    id_biere: Number
+                    , activated: {
+                        type: Boolean
+                        , value: false
+                        , observer: '_activatedChanged'
+                    }
+                    , ajaxBieres: Object
+                , };
+            }
+            _activatedChanged() {
+                if (this.activated) {
+                    console.log(this.is);
+                    this.$.requeteBiereDetails.generateRequest();
+                }
+            }
+        }
+        window.customElements.define(DetailsBiere.is, DetailsBiere);
+    </script>
+</dom-module>

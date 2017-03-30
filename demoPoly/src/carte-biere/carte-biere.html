@@ -1,0 +1,142 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/src/demopoly-app/demopoly-app-style.html">
+<link rel="import" href="/bower_components/iron-image/iron-image.html">
+
+
+<dom-module id="carte-biere">
+    <template>
+        <style is="custom-style" include="shared-styles">
+            .biere{
+                position: relative;
+                width: 400px;
+                height: 150px;
+                display: flex;
+                overflow: hidden;
+                background-color: #FFF;
+                
+            }
+            .nom{
+                font-size: 1.2em;
+                padding: 0px;
+                margin: 0px;
+            }
+            .brasserie{
+                font-size: 1em;
+                color: #666;
+                padding: 0px;
+                margin: 0px;
+            }
+            iron-image{
+                width: 100px;
+                min-height: 100px;
+            }
+            .biere .contenu {
+                display: flex;
+                position: absolute;
+                flex-direction: row;
+                width: 400px;
+            }
+            .action_visible .contenu{
+                transform: translate(116px);
+                transition : transform .6s cubic-bezier(.55, 0, .1, 1);
+            }
+            :not(.action_visible) .contenu{
+                transform: translate(0px);
+                transition : transform .6s cubic-bezier(.55, 0, .1, 1);
+            }
+            .biere .contenu .entete{
+                display: flex;
+                flex-direction: column;
+                padding: 8px;
+            }
+            .biere .contenu .info{
+                display: flex;
+                overflow: hidden;
+                padding: .3em;
+                height: 8em;
+                
+            }
+            .biere .info .description
+            {
+                margin: 0px;
+                text-align: justify;
+                font-size: 1em;
+                
+            }
+            .action_visible .action
+            {
+                /*position: absolute;*/
+                z-index: 10;
+                width: 116px;
+                height: 100%;
+                transform: translate(0px);
+                background-color: var(--paper-light-blue-a700);
+                transition: transform .6s cubic-bezier(.55, 0, .1, 1);
+                overflow: hidden;
+            }
+            :not(.action_visible) .action{
+                
+                transform: translate(-116px);
+                background-color: var(--paper-light-blue-a700);
+                transition: transform .6s cubic-bezier(.55, 0, .1, 1);
+                /*display: none;*/
+            }
+        </style>
+        <!-- @todo : Ajouté un dom-if pour la section action. Si le parent est sélectionné (focus) affiché la section action -->
+        <article id="biere" class="biere">
+            
+            <section class="action">
+                <a href$="/biere/[[biere.id_biere]]/" tabindex="-1">
+                    <paper-button>
+                        Détails
+                    </paper-button>
+                </a>
+            </section>
+            <section class="contenu">
+                <section class="entete">
+                    <iron-image sizing="contain" src="[[_checkImage(biere.image)]]"></iron-image>
+                    <h1 class="nom">[[biere.nom]]</h1>
+                    <h2 class="brasserie">[[biere.brasserie]]</h2>
+                </section>
+
+                <section class="info">
+                    <p class="description">[[biere.description]]</p>
+                </section>
+            </section>
+            
+        </article>
+        
+    </template>
+    <script>
+        class CarteBiere extends Polymer.Element {
+            static get is() {
+                return 'carte-biere';
+            }
+            static get properties() {
+                return {
+                    biere : Object,
+                    choix: {
+                        type:Object,
+                        observer: '_checkchoix'
+                    }
+                    
+                };
+            }
+            _checkchoix(){
+                console.log(this.choix);
+                if(this.choix){
+                    this.$.biere.classList.add("action_visible");
+                }
+                else{
+                    this.$.biere.classList.remove("action_visible");
+                }
+                
+            }
+            _checkImage(image) {
+                return (image != "" ? image : "http://lorempixel.com/200/200/cats/?"+Math.random() );
+            }
+            
+        }
+        window.customElements.define(CarteBiere.is, CarteBiere);
+    </script>
+</dom-module>

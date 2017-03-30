@@ -1,0 +1,24 @@
+{
+  "name": "demoPoly",
+  "main": "index.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0-rc.2",
+    "app-route": "PolymerElements/app-route#2.0-preview",
+    "app-layout": "polymerElements/app-layout#^0.10.7",
+    "paper-icon-button": "polymerElements/paper-icon-button#^1.1.4",
+    "paper-progress": "polymerElements/paper-progress#2.0-preview",
+    "iron-pages": "polymerElements/iron-pages#2.0-preview",
+    "iron-list": "polymerElements/iron-list#2.0-preview",
+    "iron-image": "polymerElements/iron-image#2.0-preview",
+    "paper-card": "polymerElements/paper-card#2.0-preview"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#2.0-preview",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#2.0-preview",
+    "web-component-tester": "v6.0.0-prerelease.5",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#1.0.0-rc.5"
+  },
+  "resolutions": {
+    "polymer": "^2.0.0-rc.2"
+  }
+}

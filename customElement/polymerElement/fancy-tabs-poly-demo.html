@@ -1,0 +1,64 @@
+
+
+<!doctype html>
+<!-- 
+Source : https://developers.google.com/web/fundamentals/getting-started/primers/shadowdom
+
+-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+          body {
+            margin: 0;
+          }
+          /* Style the element from the outside */
+          
+          fancy-tabs {
+            margin-bottom: 32px;
+            margin-right: 32px;
+            --background-color: black;
+            width:650px;
+          }
+        </style>
+        
+        <script src="./bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+        <link rel="import" href="./bower_components/polymer/polymer.html">
+        
+        <script>
+        
+        window.addEventListener("load", function(){
+            document.querySelector("fancy-tabs").addEventListener("changement", evt => console.log(evt.detail.tab));
+            //document.querySelector("fancy-tabs").addEventListener("changement", function(evt){console.log(evt.detail.tab)});
+        
+        });
+        </script>
+        <link rel="import" href="fancy-tabs-poly.html">
+        
+    </head>
+    <body>
+        <fancy-tabs background>
+          <button slot="title">Tab 1</button>
+          <button slot="title" selected>Tab 2</button>
+          <button slot="title">Tab 3</button>
+          <button slot="title">Tab 4</button>
+          <section>content panel 1</section>
+          <section>content panel 2</section>
+          <section>content panel 3</section>
+          <section>content panel 4</section>
+        </fancy-tabs>
+
+        <!-- Using <a> instead of h2 still works! -->
+        <!-- <fancy-tabs background>
+          <a slot="title">Title 1</a>
+          <a slot="title" selected>Title 2</a>
+          <a slot="title">Title 3</a>
+          <section>content panel 1</section>
+          <section>content panel 2</section>
+          <section>content panel 3</section>
+        </fancy-tabs> -->
+       
+        
+    </body>
+</html>
+

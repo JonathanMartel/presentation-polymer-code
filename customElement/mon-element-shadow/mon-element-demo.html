@@ -1,0 +1,42 @@
+<!doctype html>
+<!-- 
+Source : https://developers.google.com/web/fundamentals/getting-started/primers/shadowdom
+
+-->
+<html>
+    <head>
+         
+        
+        <style>
+          body {
+            margin: 0;
+          }
+          /* Style the element from the outside */
+          
+          mon-element {
+            margin-bottom: 32px;
+            margin-right: 32px;
+            /*--background-color: black;*/
+            width:650px;
+            background-color: aqua;   
+          }
+            mon-element p{
+                background-color: beige;
+            }
+        </style>
+        
+       
+        
+        
+    </head>
+    <body>
+        <mon-element background>Contenu de mon element</mon-element>
+        
+        
+        
+        <script src="mon-element.js"></script>
+       
+        
+    </body>
+</html>
+

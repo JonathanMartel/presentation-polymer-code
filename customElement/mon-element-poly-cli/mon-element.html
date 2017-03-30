@@ -1,0 +1,45 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`mon-element`
+
+
+@demo demo/index.html
+-->
+
+<dom-module id="mon-element">
+  <template>
+    <style>
+        :host {
+          display: block;
+          font-family: 'Roboto Slab';
+          padding: 16px;
+
+        }
+        :host([background]) {
+          background: var(--background-color, #9E9E9E);
+
+        }
+      </style>
+      <section id="conteneur" class="conteneur" on-click="_click">
+        <slot></slot>
+        <input type="text" value="{{valeur::input}}"> [[valeur]]
+      </section>
+  </template>
+
+  <script>
+    class MyElement extends Polymer.Element {
+      static get is() { return 'mon-element'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'mon-element'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(MyElement.is, MyElement);
+  </script>
+</dom-module>

@@ -1,0 +1,164 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+
+
+<link rel="import" href="/bower_components/app-layout/app-layout.html">
+<link rel="import" href="/bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="/bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="/bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="/bower_components/app-layout/app-scroll-effects/effects/waterfall.html">
+<link rel="import" href="/bower_components/app-route/app-route.html">
+<link rel="import" href="/bower_components/app-route/app-location.html">
+
+<link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="/bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="/bower_components/iron-icons/social-icons.html">
+<link rel="import" href="/bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+
+
+<link rel="import" href="/src/demopoly-app/demopoly-app-style.html">
+<link rel="import" href="/src/liste-biere/liste-biere.html">
+<link rel="import" href="/src/page-accueil/page-accueil.html">
+<link rel="import" href="/src/details-biere/details-biere.html">
+
+<dom-module id="demopoly-app">
+    <template>
+        <style is="custom-style" include="shared-styles">
+            /* https://www.polymer-project.org/2.0/toolbox/routing */
+            :root{
+                --app-toolbar-font-size: 24px;
+            }
+            @media (max-width: 600px) {
+                :root{
+                    --app-toolbar-font-size : 16px;
+                }
+            }
+            
+            app-toolbar {
+                /*background-color: #4285f4;*/
+                color: #fff;
+                font-family: 'Roboto', Helvetica, sans-serif;
+                
+            }
+            
+            paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+            
+            paper-icon-button + [main-title] {
+                margin-left: 24px;
+            }
+            
+            paper-progress {
+                display: block;
+                width: 100%;
+                --paper-progress-active-color: rgba(255, 255, 255, 0.5);
+                --paper-progress-container-color: transparent;
+            }
+            
+            app-header {
+                @apply(--layout-fixed-top);
+                color: #fff;
+                background-color: var(--paper-amber-500);
+                z-index: 50;
+            }
+            
+            app-drawer {
+                --app-drawer-scrim-background: rgba(0, 0, 100, 0.8);
+                --app-drawer-content-container: {
+                    background-color: #B0BEC5;
+                }
+            }
+            
+            iron-pages
+            {
+                padding-top: 64px;
+            }
+            
+            [content]
+            {
+                
+                /*background-color: aqua;*/
+            }
+            [main-title]{
+                pointer-events: auto;
+            }
+            
+        </style>
+        <app-location route="{{route}}"></app-location>
+        <app-route
+            route="{{route}}"
+            pattern="/:view"
+            data="{{routeData}}"
+            tail="{{subroute}}"></app-route>
+        <app-route
+            route="{{subroute}}"
+            pattern="/:id"
+            data="{{subrouteData}}"></app-route>
+        
+        <app-header-layout>
+            <app-header id="entete" fixed condenses effects="waterfall">
+                <app-toolbar>
+                    <template is="dom-if" if="{{_isDetails(routeData.view)}}">
+                        <paper-icon-button on-tap="retour" icon="arrow-back" ></paper-icon-button>
+                    </template>
+                     <template is="dom-if" if="{{!_isDetails(routeData.view)}}">
+                        <paper-icon-button icon="menu"></paper-icon-button>
+                    </template>
+                    <div spacer main-title><a href="/">Bièro - Des bières à arrière-goût social</a></div>
+                    <paper-icon-button icon="shopping-cart"></paper-icon-button>
+                </app-toolbar>
+            </app-header>
+            <iron-pages selected-attribute="activated" selected="[[routeData.view]]" attr-for-selected="name">
+                <page-accueil content name=""></page-accueil>
+                <liste-biere content name="bieres" route="{{subroute}}"></liste-biere>
+                <details-biere content name="biere" id_biere="[[subrouteData.id]]" route="{{subrouteData}}"></details-biere>
+
+          
+            </iron-pages>
+            
+        </app-header-layout>
+    </template>
+    <script>
+        class MyApplication extends Polymer.Element {
+            static get is() {
+                return 'demopoly-app';
+            }
+            static get properties() {
+                return {
+                    prop1: {
+                        type: String
+                        , value: 'demopoly-app'
+                    }
+                };
+            }
+            static get observers() {
+              return [
+                '_viewChanged(routeData.view)'
+              ]
+            }
+
+            _viewChanged(view) {
+                console.log(view);
+                
+                
+                console.log(this.route);
+            }
+            _isDetails(vue){
+                return (vue == "biere")
+                    
+            }
+            retour (){
+                window.history.back();
+            }
+            togglePanneau() {
+               // this.$.drawer.toggle();
+            }
+        }
+        window.customElements.define(MyApplication.is, MyApplication);
+    </script>
+</dom-module>

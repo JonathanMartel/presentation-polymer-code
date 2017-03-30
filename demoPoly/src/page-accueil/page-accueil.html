@@ -1,0 +1,78 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/src/demopoly-app/demopoly-app-style.html">
+
+
+
+<dom-module id="page-accueil">
+    <template>
+        <style is="custom-style" include="shared-styles">
+           
+            .promo{
+                height: 150px;
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            .promo paper-button[raised]
+            {
+                color: #FFF;
+                background-color: var(--paper-light-blue-a700);
+               height: 36px;
+            }
+            
+            .pitch{
+                display: flex;
+                justify-content: space-between; 
+            }
+            .pitch article{
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+            .pitch iron-icon{
+                --iron-icon-height: 64px;
+                --iron-icon-width: 64px;
+               color: var(--paper-light-blue-a700);
+            }
+        </style>
+        <iron-ajax></iron-ajax>
+        <section class="promo">
+            <a href="/bieres"><paper-button raised>Accéder à notre répertoire de bière</paper-button></a>
+        </section>
+        <section class="pitch">
+            <article>
+                <h1>Buvez</h1>
+                <iron-icon icon="maps:local-drink"></iron-icon>
+            </article>
+            <article>
+                <h1>Argument 2</h1>
+                <iron-icon icon="social:person"></iron-icon>
+            </article>
+            <article>
+                <h1>Argument 3</h1>
+                <iron-icon icon="maps:restaurant-menu"></iron-icon>
+            </article>
+        </section>
+    </template>
+    <script>
+        class PageAccueil extends Polymer.Element {
+            static get is() {
+                return 'page-accueil';
+            }
+            static get properties() {
+                return {
+                    prop1: {
+                        type: String
+                        , value: 'demopoly-app'
+                    }
+                };
+            }
+            
+        }
+        window.customElements.define(PageAccueil.is, PageAccueil);
+    </script>
+</dom-module>

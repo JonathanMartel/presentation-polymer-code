@@ -1,0 +1,6 @@
+{
+  "name": "demoPoly",
+  "short_name": "demoPoly",
+  "start_url": "/",
+  "display": "standalone"
+}

@@ -1,0 +1,32 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<dom-module id="details-biere">
+    <template>
+        <style is="custom-style">
+            :host{
+                display: flex;
+                text-align: center;
+                width: 100%;
+                background-color: #ff0;
+                height: 100%;
+            }
+            
+        </style>
+        <iron-ajax url="http://127.0.0.1:8080/webservice/php/biere/[[id_biere]]"></iron-ajax>
+            
+        
+    </template>
+    <script>
+        class DetailsBiere extends Polymer.Element {
+            static get is() {
+                return 'details-biere';
+            }
+            static get properties() {
+                return {
+                }
+            }
+            
+        }
+        window.customElements.define(DetailsBiere.is, DetailsBiere);
+    </script>
+</dom-module>

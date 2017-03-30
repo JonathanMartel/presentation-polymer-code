@@ -1,0 +1,112 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/bower_components/iron-list/iron-list.html">
+
+
+<link rel="import" href="/src/carte-biere/carte-biere.html">
+<link rel="import" href="/src/demopoly-app/demopoly-app-style.html">
+
+<dom-module id="liste-biere">
+    <template>
+        <style is="custom-style">
+           iron-list {
+                height: 100vh; /* don't use % values unless the parent element is sized. */
+            }
+            carte-biere{
+                border: 1px solid transparent;
+                opacity: .8;
+                transition: opacity 0.6s cubic-bezier(.55, 0, .1, 1);
+                padding: 8px;
+            }
+            carte-biere:hover{
+                opacity: 1;
+                transition: opacity 0.6s cubic-bezier(.55, 0, .1, 1);
+            }
+            
+             carte-biere[selected] {
+                outline: 0;
+                border: 1px solid;
+                border-color: #333;
+                opacity: 1;
+            }
+            carte-biere:focus .description{
+                color:aqua;
+            }
+            .actif{
+                
+                transition: opacity 0.6s cubic-bezier(.55, 0, .1, 1);
+            }
+            
+        </style>
+        <iron-ajax 
+            id="requeteBiere" 
+            url="http://127.0.0.1:8000/webservice/php/biere/" 
+            handle-as="json"
+            on-response="cbReponse"
+            last-response="{{ajaxBieres}}"
+            debounce-duration="300" ></iron-ajax>
+        <section class="listebiere">
+            
+            <iron-list id="list" as="item" items="[[ajaxBieres]]" grid scroll-target="document" selected-item="{{selectedItem}}" selection-enabled on-selected-item-changed="changement">
+                <template >
+                    <carte-biere biere="[[item]]" on-tap="selectionner" class$="{{_compClass(selected)}}" choix="{{_compClass(selected)}}"></carte-biere>
+                </template>
+            </iron-list>
+        
+        </section>
+    </template>
+    <script>
+        class ListeBiere extends Polymer.Element {
+            /*constructor()
+            {
+                super();
+            }*/
+            static get is() {
+                return 'liste-biere';
+            }
+            static get properties() {
+                return {
+                    prop1: {
+                        type: String
+                        , value: 'demopoly-app'
+                    },
+                    ajaxBieres : Array,
+                    activated: {
+                        type: Boolean,
+                        value:false,
+                        observer: '_activatedChanged'
+                        },
+                    
+                    
+                };
+            }
+            _activatedChanged (){
+                if(this.activated)
+                {
+                    this.$.requeteBiere.generateRequest();
+                }
+                
+            }
+            cbReponse (evt){
+                console.log(evt);
+                //this.bieres = evt.
+                console.log(this.ajaxBieres);
+            }
+            _compClass (select){
+                console.log(select);
+                
+                return (select ? "selected" :"" );
+            }
+            selectionner(evt){
+                this.$.list.clearSelection();
+                //console.log(evt.target);
+            }
+            changement (evt){
+                //console.log(evt);
+                this.$.list.fire('iron-resize');
+            }
+            
+        }
+        window.customElements.define(ListeBiere.is, ListeBiere);
+    </script>
+</dom-module>
