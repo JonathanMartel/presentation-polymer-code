@@ -1,0 +1,55 @@
+<!doctype html>
+<!-- 
+Source : https://developers.google.com/web/fundamentals/getting-started/primers/shadowdom
+
+-->
+<html>
+    <head>
+        <style>
+          body {
+            margin: 0;
+          }
+          /* Style the element from the outside */
+          
+          fancy-tabs {
+            margin-bottom: 32px;
+            margin-right: 32px;
+            --background-color: black;
+            width:650px;
+          }
+        </style>
+        <script>
+        
+        window.addEventListener("load", function(){
+            document.querySelector("fancy-tabs").addEventListener("changement", (evt) => {console.log(evt.detail.tab)});
+        
+        });
+        </script>
+        
+        
+    </head>
+    <body>
+        <fancy-tabs background>
+          <button slot="title">Tab 1</button>
+          <button slot="title" selected>Tab 2</button>
+          <button slot="title">Tab 3</button>
+          <button slot="title">Tab 4</button>
+          <section>content panel 1</section>
+          <section>content panel 2</section>
+          <section>content panel 3</section>
+          <section>content panel 4</section>
+        </fancy-tabs>
+
+        <!-- Using <a> instead of h2 still works! -->
+        <!-- <fancy-tabs background>
+          <a slot="title">Title 1</a>
+          <a slot="title" selected>Title 2</a>
+          <a slot="title">Title 3</a>
+          <section>content panel 1</section>
+          <section>content panel 2</section>
+          <section>content panel 3</section>
+        </fancy-tabs> -->
+        <script src="fancy-tabs-demo.js"></script>
+    </body>
+</html>
+
